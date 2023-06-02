@@ -58,8 +58,8 @@ StoredPaymentSource _$StoredPaymentSourceFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$StoredPaymentSourceToJson(StoredPaymentSource instance) {
   final val = <String, dynamic>{
-    'payment_initiator': _$PaymentInitiatorEnumMap[instance.paymentInitiator],
-    'payment_type': _$PaymentTypeEnumMap[instance.paymentType],
+    'payment_initiator': _$PaymentInitiatorEnumMap[instance.paymentInitiator]!,
+    'payment_type': _$PaymentTypeEnumMap[instance.paymentType]!,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -112,7 +112,7 @@ Map<String, dynamic> _$NetworkTransactionReferenceToJson(
   }
 
   writeNotNull('date', instance.date);
-  val['network'] = _$NetworkEnumMap[instance.network];
+  val['network'] = _$NetworkEnumMap[instance.network]!;
   return val;
 }
 
@@ -137,13 +137,23 @@ const _$NetworkEnumMap = {
 
 PaymentSource _$PaymentSourceFromJson(Map<String, dynamic> json) =>
     PaymentSource(
-      Card.fromJson(json['card'] as Map<String, dynamic>),
+      json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$PaymentSourceToJson(PaymentSource instance) =>
-    <String, dynamic>{
-      'card': instance.card,
-    };
+Map<String, dynamic> _$PaymentSourceToJson(PaymentSource instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('card', instance.card);
+  return val;
+}
 
 PaymentSourceToken _$PaymentSourceTokenFromJson(Map<String, dynamic> json) =>
     PaymentSourceToken(
@@ -400,7 +410,7 @@ Map<String, dynamic> _$SellerProtectionToJson(SellerProtection instance) {
   writeNotNull(
       'dispute_categories',
       instance.disputeCategories
-          ?.map((e) => _$DisputeCategoryValueEnumMap[e])
+          ?.map((e) => _$DisputeCategoryValueEnumMap[e]!)
           .toList());
   return val;
 }
@@ -424,7 +434,7 @@ DisputeCategory _$DisputeCategoryFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$DisputeCategoryToJson(DisputeCategory instance) =>
     <String, dynamic>{
       'dispute_category':
-          _$DisputeCategoryValueEnumMap[instance.disputeCategory],
+          _$DisputeCategoryValueEnumMap[instance.disputeCategory]!,
     };
 
 SellerReceivableBreakdown _$SellerReceivableBreakdownFromJson(

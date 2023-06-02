@@ -317,7 +317,7 @@ class NetworkTransactionReference {
 @JsonSerializable()
 class PaymentSource {
   /// The payment card used to fund the payment. Card can be a credit or debit card.
-  final Card card;
+  final Card? card;
 
   const PaymentSource(this.card);
 
